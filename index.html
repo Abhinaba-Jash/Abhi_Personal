@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Special Gift for You</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        font-family: "Poppins", sans-serif;
+        text-align: center;
+        color: white;
+        flex-direction: column;
+      }
+      .envelope-container {
+        position: relative;
+        width: 300px;
+        height: 220px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .envelope {
+        position: absolute;
+        width: 105%;
+        height: 150%;
+        background: #ff758c;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        /* overflow: hidden; */
+        top: 30%;
+      }
+      .flap {
+        position: absolute;
+        top: 0;
+        width: 94%;
+        height: 50%;
+        background: #f95b68;
+        clip-path: polygon(0 0, 100% 0, 50% 100%);
+        transform-origin: top;
+        transition: transform 0.5s ease-in-out, opacity 0.2s ease-in;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 1;
+        flex-direction: column;
+      }
+      .flap #flip {
+        color: #a65158;
+        font-size: xx-large;
+        font-weight: bolder;
+      }
+      .message-card {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        width: 87%;
+        height: fit-content;
+        background: white;
+        color: #ff5e6c;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-align: center;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        transform: translateY(80%);
+        transition: transform 0.5s ease-in-out, opacity 0.8s ease-in-out;
+        opacity: 0;
+        margin-bottom: 89px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      .envelope-container.open .flap {
+        transform: rotateX(180deg);
+        opacity: 0;
+      }
+      .envelope-container.open .love #love-msg {
+        opacity: 1;
+      }
+      .envelope-container.open .message-card {
+        transform: translateY(-50%);
+        opacity: 1;
+      }
+      .envelope1 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      #heart {
+        font-size: xx-large;
+      }
+      .love {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+      }
+      .love #love-msg {
+        font-weight: bold;
+        font-size: x-large;
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+        rotate: -26deg;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        color:#a65158;
+      }
+      .balloon {
+        position: absolute;
+        bottom: -90px;
+        width: 50px;
+        height: 50px;
+        background: red;
+        clip-path: path("M25 40 C10 60, -20 20, 25 0 C70 20, 40 60, 25 40 Z");
+        animation: rise 8s ease-in forwards;
+      }
+      @keyframes rise {
+        from {
+          transform: translateY(-100vh);
+          opacity: 1;
+        }
+        to {
+          transform: translateY(100vh);
+          opacity: 0;
+        }
+      }
+      .confetti {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: gold;
+        opacity: 0.8;
+        transform: scale(0);
+        animation: explode 3s ease-out forwards;
+      }
+      @keyframes explode {
+        0% {
+          transform: scale(0);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1) translate(var(--x), var(--y));
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="envelope-container" onclick="openEnvelope()">
+      <div class="envelope1">
+        <div class="message-card" id="message">
+          <span id="name">Hey my Sunshine</span>❤️🫂<br />
+          “I know sometimes I irritate you, but you are the life I want to live,
+          you are the beauty I want to kiss, you are the silence I want to
+          experience. Tr Bubuu toke anek besi valobase....anek anek besi.”
+        </div>
+        <div class="envelope">
+          <div class="flap">
+            <span id="flip">Flip </span>
+            <span id="heart">❤️</span>
+          </div>
+          <div class="love">
+            <span id="love-msg"
+              >I Love You Khepi❤️❤️❤️<br />
+              I am here for you always <br>(ami achi)🫂🫂🫂</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function openEnvelope() {
+        document.querySelector(".envelope-container").classList.toggle("open");
+        document.querySelector("#love-msg").classList.toggle("open");
+        if (
+          document
+            .querySelector(".envelope-container")
+            .classList.contains("open")
+        ) {
+          blastConfetti();
+          releaseBalloons();
+        }
+      }
+      function releaseBalloons() {
+        for (let i = 0; i < 80; i++) {
+          let balloon = document.createElement("div");
+          balloon.classList.add("balloon");
+          balloon.style.left = Math.random() * 100 + "%";
+          balloon.style.top = Math.random() * 100 + "%";
+          balloon.style.background = `hsl(0, 100%, 50%)`;
+          document.body.appendChild(balloon);
+          setTimeout(() => {
+            balloon.remove();
+          }, 100000);
+        }
+      }
+      function blastConfetti() {
+        for (let i = 0; i < 50; i++) {
+          let confetti = document.createElement("div");
+          confetti.classList.add("confetti");
+          confetti.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+          confetti.style.left = `${50 + Math.random() * 100 - 50}%`;
+          confetti.style.top = `${50 + Math.random() * 100 - 50}%`;
+          confetti.style.setProperty("--x", `${Math.random() * 200 - 100}px`);
+          confetti.style.setProperty("--y", `${Math.random() * 200 - 100}px`);
+          document.body.appendChild(confetti);
+          setTimeout(() => {
+            confetti.remove();
+          }, 8000);
+        }
+      }
+    </script>
+  </body>
+</html>
